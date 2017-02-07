@@ -1,0 +1,15 @@
+<div class="extract swish" id="prove">
+<pre class="source swish AutoStyle03" data-variant-id="group-1" id="prove" query-text="?-prove(8,Columns).">
+prove(A):-
+	not(A=true),not(A=(_,_)),
+	cl(A,B),
+	prove(B).
+prove((A,B)):-
+	prove(A),
+	prove(B).
+prove(true).
+
+cl(square,(rectangle,equal_sides)).
+cl(rectangle,(parallellogram,right_angles)).
+</pre>
+</div>
