@@ -1,0 +1,8 @@
+<div class="extract swish" id="setof_sort">
+<pre class="source swish AutoStyle03" data-variant-id="group-1" id="setof_sort" query-text="?-randseq(20,100,In),setof_sort(In,Out).">
+:-use_module(library(random)). % for randseq/3 to generate random lists
+
+setof_sort(In,Out):-
+    setof(X,member(X,In),Out).
+</pre>
+</div>

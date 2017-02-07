@@ -1,19 +1,45 @@
 ---
 layout: slides
-title: Examples
+title: Interactive lab examples
 subtitle: Simply Logical
 ---
 
 <section>
-  <section data-markdown>
-    <script type="text/template">
-      ## Some examples ##
-
-      * Example one is [below](/#/1/1)
-    </script>
+  <section>
+  	<h2>Fibonacci sequence</h2>
+  	Demonstrates the use of accumulators, and the difference between interpreted and uninterpreted arithmetic expressions.
   </section>
   <section>
-    {% include_relative swish_boxes/swish_1.0.1.html %}
+  	This implementation of the Fibonacci sequence is very inefficient -- the 30th number takes about 90 seconds!
+    {% include_relative swish_boxes/fib.html %}
   </section>
+  <section>
+  	Variant of <code>fib/2</code> that returns an uninterpreted arithmetic expression showing the computation tree.
+    {% include_relative swish_boxes/fibt.html %}
+  </section>
+  <section>
+	We can get an efficient version by solving a more general problem!
+    {% include_relative swish_boxes/fibn.html %}
+  </section>
+</section>
+
+<section>
+  <section>
+  	<h2>Second-order predicates</h2>
+  	generate all solutions to a query.
+    {% include_relative swish_boxes/biglist.html %}
+  </section>
+  <section>
+  	Sorting, quick and dirty
+    {% include_relative swish_boxes/setof_sort.html %}
+  </section>
+	<section data-markdown>
+		<script type="text/template">
+			See also 
+			- [`library(aggregate)`](http://www.swi-prolog.org/pldoc/man?section=aggregate)
+			- [`library(apply)`](http://www.swi-prolog.org/pldoc/man?section=apply)
+			  - e.g. `maplist/3` example on [`fibn/2`](/#/1/3)
+		</script>
+	</section>
 </section>
 
