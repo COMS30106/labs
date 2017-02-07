@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    {% include head.html %}
+
+    <!--Reveal.js-->
+    <link href="{{ site.baseurl }}/web/css/reveal.css" rel="stylesheet">
+    <link href="{{ site.baseurl }}/web/css/theme/{{ site.style }}.css" rel="stylesheet">
+
+    {% if site.title %}
+      <meta name=Title content="{{ site.title }}">
+    {% endif %}
+    {% if site.author %}
+      <meta name=author content="{{ site.author }}">
+    {% endif %}
+    {% if page.keywords  %}
+      <meta name=Keywords content="{{ page.keywords }}">
+    {% endif %}
+    {% if page.subtitle %}
+      <title>{{ page.subtitle }}</title>
+    {% else %}
+      <title>{{ site.title }}</title>
+    {% endif %}
+  </head>
+
+  <body>
+
+    {% include header.html %}
+
+
+
+    <div class="reveal" style="margin-top: -50px; padding-top: 50px;">
+      <div style="position: absolute; bottom: 1em; width: 100%; font-size: 0.4em; text-align: center;">
+        {{ site.author }} | {{ site.website }}
+      </div>
+      <div class="slides">
+
+    {% if page.title %}
+		<section>
+		<h3>{{ page.title }}</h3>
+    	<h4>{{ page.subtitle }}</h4>
+		</section>
+    {% else %}
+		<section>
+		<h3>{{ site.title }}</h3>
+    {% if site.subtitle %}<h4>{{ site.subtitle }}</h4>{% endif %}
+		<h2>{{ site.author }}</h2>
+		</section>
+    {% endif %}
+
+        {{ content }}
+      </div>
+    </div>
+
+    <script>
+      $(function() { $(".swish").LPN({swish:"{{ site.swish }}"}); });
+    </script>
+
+    <script src="{{ site.baseurl }}/web/lib/js/head.min.js"></script>
+    <script src="{{ site.baseurl }}/web/js/reveal.js"></script>
+    <script>
+      Reveal.initialize({
+        history: true,
+        math: {
+          // mathjax: 'http://cdn.mathjax.org/mathjax/latest/MathJax.js',
+          config: 'TeX-AMS_HTML-full'
+        },
+
+        dependencies: [
+        { src: '{{ site.baseurl }}/web/plugin/math/math.js', async: true },
+
+        // Interpret Markdown in <section> elements
+        { src: '{{ site.baseurl }}/web/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+        { src: '{{ site.baseurl }}/web/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          // Zoom in and out with Alt+click
+        { src: '{{ site.baseurl }}/web/plugin/zoom-js/zoom.js', async: true },
+        // Speaker notes
+        { src: '{{ site.baseurl }}/web/plugin/notes/notes.js', async: true },
+        // External HTML files
+        { src: '{{ site.baseurl }}/web/plugin/external/external.js', condition: function() { return !!document.querySelector( '[data-external]' ); } }
+
+        ]
+      });
+    </script>
+
+    {% include footer.html %}
+
+  </body>
+
+</html>

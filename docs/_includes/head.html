@@ -1,0 +1,15 @@
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+
+  <!-- SWISH -->
+  <link href="{{ site.baseurl }}/web/css/lpn.css" rel="stylesheet">
+  <link href="{{ site.baseurl }}/web/css/jquery-ui.min.css" rel="stylesheet">
+  <script src="{{ site.baseurl }}/web/js/jquery.min.js"></script>
+  <script src="{{ site.baseurl }}/web/js/jquery-ui.min.js"></script>
+  <script src="{{ site.baseurl }}/web/js/lpn.js"></script>
+
+  <!-- custom stylesheet -->
+  <!--<link href="{{ site.baseurl }}/web/css/custom.css" rel="stylesheet">-->
