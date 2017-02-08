@@ -1,15 +1,20 @@
 <div class="extract swish" id="prove">
-<pre class="source swish AutoStyle03" data-variant-id="group-1" id="prove" query-text="?-prove(8,Columns).">
+<pre class="source swish AutoStyle03" data-variant-id="group-1" id="prove" query-text="?-prove(rectangle). ?-prove(square). ?-prove(not(triangle)). ?-prove(not((triangle,rectangle))).">
 prove(A):-
-	not(A=true),not(A=(_,_)),
-	cl(A,B),
-	prove(B).
-prove((A,B)):-
-	prove(A),
-	prove(B).
-prove(true).
+    ( A=true    -> true              % we're done
+    ; A=not(B)  -> not(prove(B))     % negation as failure
+    ; A=(B,C)   -> prove(B),prove(C) % conjunctive query
+    ; otherwise -> cl(A,B),prove(B)  % resolve against clause
+    ).
 
-cl(square,(rectangle,equal_sides)).
-cl(rectangle,(parallellogram,right_angles)).
+% cl(H,B) <- (H:-B) is object-level clause
+cl(rectangle,(polygon(4),angles(90))).
+cl(square,(rectangle,regular)).
+cl(triangle,polygon(3)).
+cl(equilateral_triangle,(triangle,regular)).
+%%% facts
+cl(polygon(4),true).
+cl(regular,true).
+cl(angles(90),true).
 </pre>
 </div>
