@@ -1,4 +1,4 @@
 # Simply Logical labs
-Repository with lab exercises for the Simply Logical book.
-- [wiki](https://github.com/COMS30106/labs/wiki)
-- [slides with SWISH examples](http://labs.simply-logical.space)
+Repository with lab examples for the Simply Logical book.
+Files that can be consulted into Prolog can be downloaded above. 
+Interactive slides with SWISH examples are [here](http://labs.simply-logical.space).
