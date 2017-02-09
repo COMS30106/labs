@@ -13,5 +13,8 @@ author: Peter Flach
 # github_username:  jekyll
 style: "simple"
 
+# location of Prolog scripts
+prolog: "prolog_scripts/labs/"
+
 # Build settings
 markdown: kramdown

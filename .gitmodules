@@ -1,0 +1,3 @@
+[submodule "prolog_scripts"]
+	path = prolog_scripts
+	url = https://github.com/COMS30106/prolog_scripts.git
