@@ -1,5 +1,3 @@
-<div class="extract swish" id="prove_p">
-<pre class="source swish AutoStyle03" data-variant-id="group-1" id="prove_p" query-text="?-prove_p(rectangle). ?-prove_p(square). ">
 % display a proof tree
 prove_p(A):-prove_p(A,P),write_proof(P).
 
@@ -34,5 +32,10 @@ cl(equilateral_triangle,(triangle,regular)).
 cl(polygon(4),true).
 cl(regular,true).
 cl(angles(90),true).
-</pre>
-</div>
+
+/** &lt;examples&gt;
+
+?- prove_p(rectangle).
+?- prove_p(square).
+
+*/

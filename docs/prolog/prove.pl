@@ -1,5 +1,3 @@
-<div class="extract swish" id="prove">
-<pre class="source swish AutoStyle03" data-variant-id="group-1" id="prove" query-text="?-prove(rectangle). ?-prove(square). ?-prove(not(triangle)). ?-prove(not((rectangle,triangle))).">
 prove(A):-
     ( A=true    -> true              % we're done
     ; A=not(B)  -> not(prove(B))     % negation as failure
@@ -16,5 +14,12 @@ cl(equilateral_triangle,(triangle,regular)).
 cl(polygon(4),true).
 cl(regular,true).
 cl(angles(90),true).
-</pre>
-</div>
+
+/** &lt;examples&gt;
+
+?- prove(rectangle).
+?- prove(square).
+?- prove(not(triangle)).
+?- prove(not((rectangle,triangle))).
+
+*/

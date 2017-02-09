@@ -1,5 +1,5 @@
-<div class="extract swish" id="nqueens">
-<pre class="source swish AutoStyle03" data-variant-id="group-1" id="nqueens" query-text="?-nqueens(8,Columns).">
+% :-use_rendering(chess). % Uncomment this line for chess renderer
+
 nqueens(N,Columns) :-
     setof(X,between(1,N,X),Rows),
     perm(Rows,Columns), % generator
@@ -27,6 +27,8 @@ remove_one(X,[X|Ys],Ys).
 remove_one(X,[Y|Ys],[Y|Zs]):-
 	remove_one(X,Ys,Zs).
 
-:-use_rendering(chess).
-</pre>
-</div>
+/** &lt;examples&gt;
+
+?- nqueens(8,Columns).
+
+*/

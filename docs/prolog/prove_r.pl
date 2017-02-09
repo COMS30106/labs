@@ -1,5 +1,3 @@
-<div class="extract swish" id="prove_r">
-<pre class="source swish AutoStyle03" data-variant-id="group-1" id="prove_r" query-text="?-prove_r(rectangle). ?-prove_r(square). ?-prove_r(not(triangle)). ?-prove_r(not((rectangle,triangle))).">
 prove_r(A):-
     writeln(A), % show current query
     ( A=true    -> true
@@ -23,5 +21,12 @@ cl(equilateral_triangle,(triangle,regular)).
 cl(polygon(4),true).
 cl(regular,true).
 cl(angles(90),true).
-</pre>
-</div>
+
+/** &lt;examples&gt;
+
+?- prove_r(rectangle).
+?- prove_r(square).
+?- prove_r(not(triangle)).
+?- prove_r(not((rectangle,triangle))).
+
+*/

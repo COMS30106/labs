@@ -1,5 +1,3 @@
-<div class="extract swish" id="powerset">
-<pre class="source swish AutoStyle03" data-variant-id="group-1" id="powerset" query-text="?-powerset1([a,b,c,d,e,f). ?-powerset2([a,b,c,d,e,f],PS). ?-powerset([a,b,c,d,e,f],PS). ?-extend_pset(1,[[],[2],[3],[2,3]],ES). ?-extend_pset(1,S,ES).">
 % powerset(S,PS) <- PS is the list of all sublists of S
 % First try
 powerset1([],[[]]).
@@ -26,5 +24,13 @@ powerset([H|T],Acc,PowerSet):-
     powerset(T,Acc1,PowerSet). % tail-recursive
 
 powerset(Set,PowerSet):-powerset(Set,[[]],PowerSet).
-</pre>
-</div>
+
+/** &lt;examples&gt;
+
+?- powerset1([a,b,c,d,e,f],PS).
+?- powerset2([a,b,c,d,e,f],PS).
+?- powerset([a,b,c,d,e,f],PS).
+?- extend_pset(1,[[],[2],[3],[2,3]],ES).
+?- extend_pset(1,S,ES).
+
+*/

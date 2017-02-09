@@ -1,3 +1,5 @@
+:-use_module(library(random)). % for randseq/3 to generate random lists
+
 % psort(L,SL) <- L and SL contain the same elements, SL is sorted
 psort(L,SL):-
     perm(L,SL),   % generator
@@ -19,5 +21,12 @@ remove_one(X,[Y|Ys],[Y|Zs]):-
 sorted([]).
 sorted([_X]).
 sorted([X,Y|L]):-
-	X=<Y,
-	sorted([Y|L]).
+  ( compare('=', X, Y)
+  ; compare('<', X, Y)
+  ), sorted([Y|L]).
+
+/** &lt;examples&gt;
+
+?- randseq(5,100,In), psort(In,Out).
+
+*/
