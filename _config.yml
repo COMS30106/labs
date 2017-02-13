@@ -14,7 +14,7 @@ author: Peter Flach
 style: "simple"
 
 # location of Prolog scripts
-prolog: "prolog_scripts/labs/"
+prolog: "prolog_scripts/"
 
 # Build settings
 markdown: kramdown
