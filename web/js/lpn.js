@@ -23,7 +23,7 @@
     return this.each(function() {
 		var elem = $(this);
 		var data = {};			/* private data */
-
+ 	
 		data.swishURL = options.swish || SWISH;
 
 		function appendRunButtonTo(obj) {
@@ -350,3 +350,19 @@ var modal = (function() {
   return method;
 
 }());
+
+
+var verSwishScale = 0.65;
+var horSwishScale = 0.5;
+
+$(document).ready(function(){
+    $('pre.source.swish').css('height', ($(window).height() * verSwishScale).toString());
+    //$('pre.source.swish').css('width', ($(window).width() * horSwishScale).toString());
+    $('pre.source.swish').css('overflow', 'scroll');
+});
+
+
+$(window).resize(function(){
+	$('pre.source.swish').css('height', ($(window).height() * verSwishScale).toString());
+    //$('pre.source.swish').css('width', ($(window).width() * horSwishScale).toString());
+});
