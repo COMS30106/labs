@@ -352,10 +352,10 @@ var modal = (function() {
 }());
 
 
-const setSwishScale = () => $(window).height() <= 900 ? 0.65 : $(window).height() <= 1080 ? 0.485 : 0.4;
+var verSwishScale = 0.65;
+var horSwishScale = 0.5;
 
 $(document).ready(function(){
-	verSwishScale = setSwishScale();
     $('pre.source.swish').css('height', ($(window).height() * verSwishScale).toString());
     //$('pre.source.swish').css('width', ($(window).width() * horSwishScale).toString());
     $('pre.source.swish').css('overflow', 'scroll');
@@ -363,7 +363,6 @@ $(document).ready(function(){
 
 
 $(window).resize(function(){
-	verSwishScale = setSwishScale();
 	$('pre.source.swish').css('height', ($(window).height() * verSwishScale).toString());
     //$('pre.source.swish').css('width', ($(window).width() * horSwishScale).toString());
 });
