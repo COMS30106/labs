@@ -25,16 +25,17 @@
 		var data = {};			/* private data */
  	
 		data.swishURL = options.swish || SWISH;
-
+/*
 		function appendRunButtonTo(obj) {
 		  obj.append("<div class='load'></div>")
 			 .on("click", "div.load", function() {
+			   console.log('oldbutton');
 			   toggleSWISH(elem);
 			 });
 
 		  return obj;
 		}
-
+*/
 		// Begin edited by TW.
 		if( elem.hasClass("temp") ) {
 			database[elem.attr("id")] = elem.text();
@@ -50,7 +51,7 @@
 			elem.append(run);
 			run.wrap("<div class='open-prolog'></div>");
 			elem = run;
-			appendRunButtonTo(elem.parent());
+//			appendRunButtonTo(elem.parent());
 		  }
 		}
 
@@ -59,7 +60,7 @@
 		else if ( elem.hasClass("answer") ) {
 			elem.wrap("<div class='answer'></div>");
 			data.answer = elem.attr("answer");
-			appendRunButtonTo(elem.parent());
+//			appendRunButtonTo(elem.parent());
 		}
 
 		// End edit.
@@ -125,7 +126,7 @@
 		  currentSource = data;
 		  keepingSource.push(data);
 		  elem.wrap("<div class='source'></div>");
-		  appendRunButtonTo(elem.parent());
+//		  appendRunButtonTo(elem.parent());
 		}
 
 		else if ( elem.hasClass("query") ) {
@@ -157,7 +158,7 @@
 		  } else {
 			data.queries = [elem.text(), "\n"];
 			elem.wrap("<div class='query'></div>");
-			appendRunButtonTo(elem.parent());
+//			appendRunButtonTo(elem.parent());
 		  }
 		}
 
@@ -175,7 +176,7 @@
 			data.queries = [];
 			addQueries(data.queries);
 			elem.wrap("<div class='query'></div>");
-			appendRunButtonTo(elem.parent());
+//			appendRunButtonTo(elem.parent());
 		  }
 		}
 		elem.data(pluginName, data);	/* store with element */
@@ -185,7 +186,7 @@
 
   // <private functions>
 
-  function toggleSWISH(elem) {
+/*  function toggleSWISH(elem) {
     function attr(name, value) {
       content.push(" ", name, '="', value, '"');
     }
@@ -244,7 +245,7 @@
 
       currentSWISHElem = elem;
     }
-  }
+  }*/
 
   /**
    * @returns {String} Query text, which starts with ?- and ends in .\n
@@ -351,33 +352,100 @@ var modal = (function() {
 
 }());
 
+// Run all functions on load:
+$(document).ready(function(){
+	scaleBoxes();
+	removeExamples();
+	addButtons();
+});
 
+// Short function to set the scale multiplier based on vertical resolution
 const setSwishScale = () => $(window).height() <= 900 ? 0.65 : $(window).height() <= 1080 ? 0.485 : 0.4;
 
-$(document).ready(function(){
+// Scale all of the boxes based on the scale multiplier set above
+function scaleBoxes(){
 	verSwishScale = setSwishScale();
     $('pre.source.swish').css('height', ($(window).height() * verSwishScale).toString());
-    //$('pre.source.swish').css('width', ($(window).width() * horSwishScale).toString());
     $('pre.source.swish').css('overflow', 'scroll');
-});
+};
 
-
-$(window).resize(function(){
-	verSwishScale = setSwishScale();
-	$('pre.source.swish').css('height', ($(window).height() * verSwishScale).toString());
-    //$('pre.source.swish').css('width', ($(window).width() * horSwishScale).toString());
-});
-
-
-$(document).ready(function(){
+// Remove examples from the code visually
+function removeExamples(){
 	$('pre.source.swish').each(function(){
-		box = $(this);
-		linesArray = box.html().split('\n');
-		examplesIndex = linesArray.indexOf("/** &lt;examples&gt;");
+		let box = $(this);
+		let linesArray = box.html().split('\n');
+		let examplesIndex = linesArray.indexOf("/** &lt;examples&gt;");
 		linesArray.splice(examplesIndex, 0, '<span class="examplesToRemove">');
 		linesArray.push('</span>');
-		newContent = linesArray.join('\n');
+		let newContent = linesArray.join('\n');
 		box.html(newContent);
 	});
 	$('.examplesToRemove').hide();
-});
+}
+
+// Short function which appends run/close buttons to a box when called
+const appendNewButton = (addButtonTo) => $('<div class="runswish" id="' + $(addButtonTo).attr('id') + '"></div>').insertBefore(addButtonTo);
+
+// Add the buttons to all of the boxes, add the correct class for the button to function, and create the click listener for the buttons
+function addButtons(){
+	$('pre.source.swish').each(function(){
+		appendNewButton($(this));
+	});
+	$('pre.source.swish').each(function(){
+		$(this).addClass('current' + $(this).attr('id'));
+	});
+	$('.runswish').click(function(){
+		newSwishToggle($('.current' + $($(this)).attr('id')));
+		buttonBGToggle($(this));
+	});
+}
+
+// Short utility function to find the position of the nth occurence of a string within another string
+const getPosition = (string, substring, index) => string.split(substring, index).join(substring).length;
+
+// Short function which toggles the image of the run/close button when called
+function buttonBGToggle(thisButton){
+	if($(thisButton).css('background-image').slice(getPosition($(thisButton).css('background-image'), '/', 3) + 1, -2) == "img/run.png"){
+		$(thisButton).css('background-image', "url(\"img/close.png\")");
+	}
+	else {
+		$(thisButton).css('background-image', "url(\"img/run.png\")");
+	}
+}
+
+// Main function to toggle the static code text boxes into SWISH iframes and back. Called on button click.
+function newSwishToggle(thisBox){
+	if(thisBox.is('pre') && $('iframe#' + thisBox.attr('id')).length == 0){
+		let qMark = '?';
+		let swishBox = ['<iframe src="'];
+		let srcAttribute = [];
+		srcAttribute.push($('pre.source.swish').attr('swishurl'));
+		srcAttribute.push(qMark + 'code=');
+		srcAttribute.push($('pre.source.swish').attr('onlinefolder'));
+		srcAttribute.push(thisBox.attr('id'));
+		srcAttribute.push('.pl"');
+		swishBox.push(srcAttribute.join(''));
+		swishBox.push(' class="swishiframe"');
+		swishBox.push(' id="' + thisBox.attr('id') + '"></iframe>');
+		joinedSwishBox = swishBox.join('');
+		console.log(joinedSwishBox);
+		$(joinedSwishBox).insertAfter(thisBox);
+		$('iframe#' + thisBox.attr('id')).css('height', ($(window).height() * verSwishScale).toString());
+		$('iframe#' + thisBox.attr('id')).css('width', '90%');
+		$('iframe#' + thisBox.attr('id')).hide();
+		$('.load.IFRAME.' + $(this).attr('id')).hide();
+	};
+
+	if(thisBox.is('iframe')){
+		thisBox.removeClass('current' + thisBox.attr('id'));
+		$('pre#' + thisBox.attr('id')).addClass('current' + thisBox.attr('id'));
+		thisBox.hide(400);
+		$('pre#' + thisBox.attr('id')).show(400);
+	} else if(thisBox.is('pre')){
+		thisBox.removeClass('current' + thisBox.attr('id'));
+		$('iframe#' + thisBox.attr('id')).addClass('current' + thisBox.attr('id'));
+		thisBox.hide(400);
+		$('iframe#' + thisBox.attr('id')).show(400);
+		$('.load.IFRAME.' + thisBox.attr('id')).show();
+	}
+};
