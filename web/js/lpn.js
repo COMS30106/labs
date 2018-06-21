@@ -25,16 +25,17 @@
 		var data = {};			/* private data */
  	
 		data.swishURL = options.swish || SWISH;
-
+/*
 		function appendRunButtonTo(obj) {
 		  obj.append("<div class='load'></div>")
 			 .on("click", "div.load", function() {
+			   console.log('oldbutton');
 			   toggleSWISH(elem);
 			 });
 
 		  return obj;
 		}
-
+*/
 		// Begin edited by TW.
 		if( elem.hasClass("temp") ) {
 			database[elem.attr("id")] = elem.text();
@@ -50,7 +51,7 @@
 			elem.append(run);
 			run.wrap("<div class='open-prolog'></div>");
 			elem = run;
-			appendRunButtonTo(elem.parent());
+//			appendRunButtonTo(elem.parent());
 		  }
 		}
 
@@ -59,7 +60,7 @@
 		else if ( elem.hasClass("answer") ) {
 			elem.wrap("<div class='answer'></div>");
 			data.answer = elem.attr("answer");
-			appendRunButtonTo(elem.parent());
+//			appendRunButtonTo(elem.parent());
 		}
 
 		// End edit.
@@ -125,7 +126,7 @@
 		  currentSource = data;
 		  keepingSource.push(data);
 		  elem.wrap("<div class='source'></div>");
-		  appendRunButtonTo(elem.parent());
+//		  appendRunButtonTo(elem.parent());
 		}
 
 		else if ( elem.hasClass("query") ) {
@@ -157,7 +158,7 @@
 		  } else {
 			data.queries = [elem.text(), "\n"];
 			elem.wrap("<div class='query'></div>");
-			appendRunButtonTo(elem.parent());
+//			appendRunButtonTo(elem.parent());
 		  }
 		}
 
@@ -175,7 +176,7 @@
 			data.queries = [];
 			addQueries(data.queries);
 			elem.wrap("<div class='query'></div>");
-			appendRunButtonTo(elem.parent());
+//			appendRunButtonTo(elem.parent());
 		  }
 		}
 		elem.data(pluginName, data);	/* store with element */
@@ -185,7 +186,7 @@
 
   // <private functions>
 
-  function toggleSWISH(elem) {
+/*  function toggleSWISH(elem) {
     function attr(name, value) {
       content.push(" ", name, '="', value, '"');
     }
@@ -244,7 +245,7 @@
 
       currentSWISHElem = elem;
     }
-  }
+  }*/
 
   /**
    * @returns {String} Query text, which starts with ?- and ends in .\n
@@ -361,23 +362,108 @@ $(document).ready(function(){
     $('pre.source.swish').css('overflow', 'scroll');
 });
 
-
+/*
 $(window).resize(function(){
 	verSwishScale = setSwishScale();
 	$('pre.source.swish').css('height', ($(window).height() * verSwishScale).toString());
     //$('pre.source.swish').css('width', ($(window).width() * horSwishScale).toString());
 });
+*/
 
 
 $(document).ready(function(){
 	$('pre.source.swish').each(function(){
-		box = $(this);
-		linesArray = box.html().split('\n');
-		examplesIndex = linesArray.indexOf("/** &lt;examples&gt;");
+		let box = $(this);
+		let linesArray = box.html().split('\n');
+		let examplesIndex = linesArray.indexOf("/** &lt;examples&gt;");
 		linesArray.splice(examplesIndex, 0, '<span class="examplesToRemove">');
 		linesArray.push('</span>');
-		newContent = linesArray.join('\n');
+		let newContent = linesArray.join('\n');
 		box.html(newContent);
 	});
 	$('.examplesToRemove').hide();
 });
+
+let q = '?';
+
+
+/*
+$(document).ready(function(){
+	$('.testswish').each(function(){
+		if($(this).attr('filename') != undefined){
+			let swishBox = '<iframe src="' + $(this).attr('swishurl') + q + 'code=' + $(this).attr('onlineurl') + $(this).attr('filename') + '.pl"></iframe>';
+			$(this).append(swishBox);
+		};
+	});
+});
+*/
+
+
+
+function appendNewButton(addButtonTo){
+	addButtonTo.append($('<div class="load ' + addButtonTo.get(0).tagName + ' ' + addButtonTo.attr('id') + '" id="justadded"></div>').click(function(){
+		newSwishToggle(addButtonTo);
+		console.log('newbutton');
+	}));
+	console.log('pre');
+	$('#justadded').css('background-image', 'url("img/Actions-system-run-icon.png")')
+	$('#justadded').attr('id', 'addedbefore');
+};
+
+$(document).ready(function(){
+	$('pre.source.swish').each(function(){
+		$(this).addClass('current' + $(this).attr('id'));
+	});
+	$('.itsabutton').click(function(){
+		newSwishToggle($('.current' + $($(this)).attr('id')));
+		buttonBGToggle($(this));
+	});
+});
+
+const getPosition = (string, substring, index) => string.split(substring, index).join(substring).length;
+
+function buttonBGToggle(thisButton){
+	if($(thisButton).css('background-image').slice(getPosition($(thisButton).css('background-image'), '/', 3) + 1, -2) == "img/Actions-system-run-icon.png"){
+		$(thisButton).css('background-image', "url(\"img/close.png\")");
+	}
+	else {
+		$(thisButton).css('background-image', "url(\"img/Actions-system-run-icon.png\")");
+	}
+}
+
+function newSwishToggle(thisBox){
+	if(thisBox.is('pre') && $('iframe#' + thisBox.attr('id')).length == 0){
+		let qMark = '?';
+		let swishBox = ['<iframe src="'];
+		let srcAttribute = [];
+		srcAttribute.push($('pre.source.swish').attr('swishurl'));
+		srcAttribute.push(qMark + 'code=');
+		srcAttribute.push($('pre.source.swish').attr('onlinefolder'));
+		srcAttribute.push(thisBox.attr('id'));
+		srcAttribute.push('.pl"');
+		swishBox.push(srcAttribute.join(''));
+		swishBox.push(' class="swishiframe"');
+		swishBox.push(' id="' + thisBox.attr('id') + '"></iframe>');
+		joinedSwishBox = swishBox.join('');
+		console.log(joinedSwishBox);
+		$(joinedSwishBox).insertAfter(thisBox);
+		$('iframe#' + thisBox.attr('id')).css('height', ($(window).height() * verSwishScale).toString());
+		$('iframe#' + thisBox.attr('id')).css('width', '90%');
+		appendNewButton($('iframe#' + thisBox.attr('id')));
+		$('iframe#' + thisBox.attr('id')).hide();
+		$('.load.IFRAME.' + $(this).attr('id')).hide();
+	};
+
+	if(thisBox.is('iframe')){
+		thisBox.removeClass('current' + thisBox.attr('id'));
+		$('pre#' + thisBox.attr('id')).addClass('current' + thisBox.attr('id'));
+		thisBox.hide(400);
+		$('pre#' + thisBox.attr('id')).show(400);
+	} else if(thisBox.is('pre')){
+		thisBox.removeClass('current' + thisBox.attr('id'));
+		$('iframe#' + thisBox.attr('id')).addClass('current' + thisBox.attr('id'));
+		thisBox.hide(400);
+		$('iframe#' + thisBox.attr('id')).show(400);
+		$('.load.IFRAME.' + thisBox.attr('id')).show();
+	}
+};
