@@ -367,3 +367,17 @@ $(window).resize(function(){
 	$('pre.source.swish').css('height', ($(window).height() * verSwishScale).toString());
     //$('pre.source.swish').css('width', ($(window).width() * horSwishScale).toString());
 });
+
+
+$(document).ready(function(){
+	$('pre.source.swish').each(function(){
+		box = $(this);
+		linesArray = box.html().split('\n');
+		examplesIndex = linesArray.indexOf("/** &lt;examples&gt;");
+		linesArray.splice(examplesIndex, 0, '<span class="examplesToRemove">');
+		linesArray.push('</span>');
+		newContent = linesArray.join('\n');
+		box.html(newContent);
+	});
+	$('.examplesToRemove').hide();
+});
