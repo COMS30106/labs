@@ -23,12 +23,13 @@
     return this.each(function() {
 		var elem = $(this);
 		var data = {};			/* private data */
-
+ 	
 		data.swishURL = options.swish || SWISH;
 
 		function appendRunButtonTo(obj) {
 		  obj.append("<div class='load'></div>")
 			 .on("click", "div.load", function() {
+			   console.log('oldbutton');
 			   toggleSWISH(elem);
 			 });
 
@@ -350,3 +351,33 @@ var modal = (function() {
   return method;
 
 }());
+
+// Run all functions on load:
+$(document).ready(function(){
+	scaleBoxes();
+	removeExamples();
+});
+
+// Short function to set the scale multiplier based on vertical resolution
+const setSwishScale = () => $(window).height() <= 900 ? 0.65 : $(window).height() <= 1080 ? 0.485 : 0.4;
+
+// Scale all of the boxes based on the scale multiplier set above
+function scaleBoxes(){
+	verSwishScale = setSwishScale();
+    $('pre.source.swish').css('height', ($(window).height() * verSwishScale).toString());
+    $('pre.source.swish').css('overflow', 'auto');
+};
+
+// Remove examples from the code visually
+function removeExamples(){
+	$('pre.source.swish').each(function(){
+		let box = $(this);
+		let linesArray = box.html().split('\n');
+		let examplesIndex = linesArray.indexOf("/** &lt;examples&gt;");
+		linesArray.splice(examplesIndex, 0, '<span class="examplesToRemove">');
+		linesArray.push('</span>');
+		let newContent = linesArray.join('\n');
+		box.html(newContent);
+	});
+	$('.examplesToRemove').hide();
+}
