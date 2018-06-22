@@ -1,6 +1,4 @@
-<div class="itsabutton" id="{{ include.id }}" style="z-index: 1000; float: right; background-image: url('img/Actions-system-run-icon.png'); height: 48px; width: 48px; margin-bottom: 10px;"></div>
-<!-- <div class="padding" style="height: 30px; width: 100%;"></div> -->
-<div class="extract swish" id="{{ include.id }}" style="padding-right: 50px">
+<div class="extract swish" id="{{ include.id }}">
   <pre class="source swish" id="{{ include.id }}" onlinefolder="{{ site.onlinefolder }}" swishurl="{{ site.swish }}">
 {% include_relative {{ include.id | prepend:site.prolog | append:".pl" }} %}
   </pre>

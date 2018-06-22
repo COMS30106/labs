@@ -401,20 +401,18 @@ $(document).ready(function(){
 
 
 function appendNewButton(addButtonTo){
-	addButtonTo.append($('<div class="load ' + addButtonTo.get(0).tagName + ' ' + addButtonTo.attr('id') + '" id="justadded"></div>').click(function(){
-		newSwishToggle(addButtonTo);
-		console.log('newbutton');
-	}));
+	$('<div class="runswish" id="' + $(addButtonTo).attr('id') + '"></div>').insertBefore(addButtonTo);
 	console.log('pre');
-	$('#justadded').css('background-image', 'url("img/Actions-system-run-icon.png")')
-	$('#justadded').attr('id', 'addedbefore');
 };
 
 $(document).ready(function(){
 	$('pre.source.swish').each(function(){
+		appendNewButton($(this));
+	});
+	$('pre.source.swish').each(function(){
 		$(this).addClass('current' + $(this).attr('id'));
 	});
-	$('.itsabutton').click(function(){
+	$('.runswish').click(function(){
 		newSwishToggle($('.current' + $($(this)).attr('id')));
 		buttonBGToggle($(this));
 	});
@@ -423,11 +421,11 @@ $(document).ready(function(){
 const getPosition = (string, substring, index) => string.split(substring, index).join(substring).length;
 
 function buttonBGToggle(thisButton){
-	if($(thisButton).css('background-image').slice(getPosition($(thisButton).css('background-image'), '/', 3) + 1, -2) == "img/Actions-system-run-icon.png"){
+	if($(thisButton).css('background-image').slice(getPosition($(thisButton).css('background-image'), '/', 3) + 1, -2) == "img/run.png"){
 		$(thisButton).css('background-image', "url(\"img/close.png\")");
 	}
 	else {
-		$(thisButton).css('background-image', "url(\"img/Actions-system-run-icon.png\")");
+		$(thisButton).css('background-image', "url(\"img/run.png\")");
 	}
 }
 
@@ -449,7 +447,6 @@ function newSwishToggle(thisBox){
 		$(joinedSwishBox).insertAfter(thisBox);
 		$('iframe#' + thisBox.attr('id')).css('height', ($(window).height() * verSwishScale).toString());
 		$('iframe#' + thisBox.attr('id')).css('width', '90%');
-		appendNewButton($('iframe#' + thisBox.attr('id')));
 		$('iframe#' + thisBox.attr('id')).hide();
 		$('.load.IFRAME.' + $(this).attr('id')).hide();
 	};
