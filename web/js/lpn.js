@@ -352,26 +352,25 @@ var modal = (function() {
 
 }());
 
+// Run all functions on load:
+$(document).ready(function(){
+	scaleBoxes();
+	removeExamples();
+	addButtons();
+});
 
+// Short function to set the scale multiplier based on vertical resolution
 const setSwishScale = () => $(window).height() <= 900 ? 0.65 : $(window).height() <= 1080 ? 0.485 : 0.4;
 
-$(document).ready(function(){
+// Scale all of the boxes based on the scale multiplier set above
+function scaleBoxes(){
 	verSwishScale = setSwishScale();
     $('pre.source.swish').css('height', ($(window).height() * verSwishScale).toString());
-    //$('pre.source.swish').css('width', ($(window).width() * horSwishScale).toString());
     $('pre.source.swish').css('overflow', 'scroll');
-});
+};
 
-/*
-$(window).resize(function(){
-	verSwishScale = setSwishScale();
-	$('pre.source.swish').css('height', ($(window).height() * verSwishScale).toString());
-    //$('pre.source.swish').css('width', ($(window).width() * horSwishScale).toString());
-});
-*/
-
-
-$(document).ready(function(){
+// Remove examples from the code visually
+function removeExamples(){
 	$('pre.source.swish').each(function(){
 		let box = $(this);
 		let linesArray = box.html().split('\n');
@@ -382,30 +381,13 @@ $(document).ready(function(){
 		box.html(newContent);
 	});
 	$('.examplesToRemove').hide();
-});
+}
 
-let q = '?';
+// Short function which appends run/close buttons to a box when called
+const appendNewButton = (addButtonTo) => $('<div class="runswish" id="' + $(addButtonTo).attr('id') + '"></div>').insertBefore(addButtonTo);
 
-
-/*
-$(document).ready(function(){
-	$('.testswish').each(function(){
-		if($(this).attr('filename') != undefined){
-			let swishBox = '<iframe src="' + $(this).attr('swishurl') + q + 'code=' + $(this).attr('onlineurl') + $(this).attr('filename') + '.pl"></iframe>';
-			$(this).append(swishBox);
-		};
-	});
-});
-*/
-
-
-
-function appendNewButton(addButtonTo){
-	$('<div class="runswish" id="' + $(addButtonTo).attr('id') + '"></div>').insertBefore(addButtonTo);
-	console.log('pre');
-};
-
-$(document).ready(function(){
+// Add the buttons to all of the boxes, add the correct class for the button to function, and create the click listener for the buttons
+function addButtons(){
 	$('pre.source.swish').each(function(){
 		appendNewButton($(this));
 	});
@@ -416,10 +398,12 @@ $(document).ready(function(){
 		newSwishToggle($('.current' + $($(this)).attr('id')));
 		buttonBGToggle($(this));
 	});
-});
+}
 
+// Short utility function to find the position of the nth occurence of a string within another string
 const getPosition = (string, substring, index) => string.split(substring, index).join(substring).length;
 
+// Short function which toggles the image of the run/close button when called
 function buttonBGToggle(thisButton){
 	if($(thisButton).css('background-image').slice(getPosition($(thisButton).css('background-image'), '/', 3) + 1, -2) == "img/run.png"){
 		$(thisButton).css('background-image', "url(\"img/close.png\")");
@@ -429,6 +413,7 @@ function buttonBGToggle(thisButton){
 	}
 }
 
+// Main function to toggle the static code text boxes into SWISH iframes and back. Called on button click.
 function newSwishToggle(thisBox){
 	if(thisBox.is('pre') && $('iframe#' + thisBox.attr('id')).length == 0){
 		let qMark = '?';
