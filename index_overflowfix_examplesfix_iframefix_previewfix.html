@@ -1,0 +1,172 @@
+---
+layout: slides
+title: Interactive lab examples
+subtitle: Simply Logical
+---
+
+<section>
+  <section>
+    <h2>Fibonacci sequence</h2>
+    Demonstrates the use of accumulators, and the difference between interpreted and uninterpreted arithmetic expressions.
+  </section>
+  <section>
+    This implementation of the Fibonacci sequence is very inefficient -- the 30th number takes about 90 seconds!
+    {% include new_swish_box.html id="fib" %}
+  </section>
+  <section>
+    Variant of <code>fib/2</code> that returns an uninterpreted arithmetic expression showing the computation tree.
+    {% include new_swish_box.html id="fibt" %}
+  </section>
+  <section>
+  We can get an efficient version by solving a more general problem!
+    {% include new_swish_box.html id="fibn" %}
+  </section>
+</section>
+
+<section>
+  <section>
+    <h2>Second-order predicates</h2>
+    generate all solutions to a query.
+    {% include new_swish_box.html id="biglist" %}
+  </section>
+  <section>
+    Sorting, quick and dirty
+    {% include new_swish_box.html id="setof_sort" %}
+  </section>
+  <section>
+    Existential variables
+    {% include new_swish_box.html id="secondorder" %}
+  </section>
+  <section data-markdown>
+  <script type="text/template">
+     See also 
+     - [`library(aggregate)`](http://www.swi-prolog.org/pldoc/man?section=aggregate)
+     - [`library(apply)`](http://www.swi-prolog.org/pldoc/man?section=apply)
+     - e.g. `maplist/3` example on [`fibn/2`](/#/1/3)
+  </script>
+  </section>
+</section>
+
+<section>
+  <section data-markdown>
+    <script type="text/template">
+      ## Generate and test
+      This is a programming technique exploiting Prolog's non-determinism:
+      - a *generator* generates candidate solutions;
+      - a *tester* checks whether a candidate has the required properties.
+      
+      It will be beneficial to make the generator as efficient as possible
+    </script>
+  </section>
+  <section>
+    An AI classic: N non-attacking queens
+    {% include new_swish_box.html id="nqueens" %}
+  </section>
+  <section>
+    Finding prime factors:
+    {% include new_swish_box.html id="factors" %}
+  </section>
+  <section>
+    How not to use generate and test:
+    {% include new_swish_box.html id="psort" %}
+  </section>
+</section>
+
+<section>
+  <section>
+    <h2>Meta-interpreters</h2>
+    {% include new_swish_box.html id="prove" %}
+  </section>
+  <section>
+    Keep conjunctive resolvent together
+    {% include new_swish_box.html id="prove_r" %}
+  </section>
+  <section>
+    Show (propositional) proof tree
+    {% include new_swish_box.html id="prove_p" %}
+  </section>
+</section>
+
+<section>
+  <section>
+    <h2>Depth-first search and variants</h2>
+    {% include new_swish_box.html id="search_df" %}
+  </section>
+  <section>
+    Depth-first search without agenda = transitive closure
+    {% include new_swish_box.html id="search_bt" %}
+  </section>
+  <section>
+    Backtracking DF search with depth bound
+    {% include new_swish_box.html id="search_d" %}
+  </section>
+  <section>
+    Iterative deepening
+    {% include new_swish_box.html id="search_id" %}
+  </section>
+  <section>
+    Don't use search if an analytic solution exists!
+    {% include new_swish_box.html id="hanoi" %}
+  </section>
+</section>
+
+<section>
+  <section>
+    <h2>Breadth-first search</h2>
+    {% include new_swish_box.html id="search_bf" %}
+  </section>
+  <section>
+    Breadth-first meta-interpreter
+    {% include new_swish_box.html id="prove_bf" %}
+  </section>
+  <section>
+    Meta-interpreter for full clausal logic
+    {% include new_swish_box.html id="refute_bf" %}
+  </section>
+  <section>
+    Forward chaining
+    {% include new_swish_box.html id="model" %}
+  </section>
+  <section>
+    Depth-bounded forward chaining for infinite domains
+    {% include new_swish_box.html id="model_d" %}
+  </section>
+</section>
+
+<section>
+  <section>
+    <h2>Informed search</h2>
+  </section>
+  <section>
+    Sliding tiles (best-first but not A* and with aggressive pruning)
+    {% include new_swish_box.html id="tiles" %}
+  </section>
+  <section>
+    Path finding (depth-first, breadth-first, A*, backtracking)
+    {% include new_swish_box.html id="path" %}
+  </section>
+</section>
+
+<section>
+  <section>
+    <h2>Definite Clause Grammars</h2>
+  </section>
+  <section>
+    Roman numerals
+    {% include new_swish_box.html id="roman" %}
+  </section>
+</section>
+
+<section>
+  <section>
+    <h2>Inductive reasoning</h2>
+  </section>
+  <section>
+    Bottom-up induction
+    {% include new_swish_box.html id="section92" %}
+  </section>
+  <section>
+    Top-down induction
+    {% include new_swish_box.html id="section93" %}
+  </section>
+</section>
