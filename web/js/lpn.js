@@ -23,7 +23,7 @@
     return this.each(function() {
 		var elem = $(this);
 		var data = {};			/* private data */
- 	
+
 		data.swishURL = options.swish || SWISH;
 
 		function appendRunButtonTo(obj) {
