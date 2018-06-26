@@ -14,7 +14,6 @@ const setSwishScale = () => $(window).height() <= 900 ? 0.65 : $(window).height(
 function scaleBoxes(){
 	verSwishScale = setSwishScale();
     $('pre.source.newswish').css('height', ($(window).height() * verSwishScale).toString());
-    $('.innerswishbox').css('overflow', 'auto');
 };
 
 // Remove examples from the previews visually
