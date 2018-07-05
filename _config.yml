@@ -18,3 +18,6 @@ prolog: "prolog_scripts/"
 
 # Build settings
 markdown: kramdown
+
+# Online folder location of Prolog scripts
+onlinefolder: "https://raw.githubusercontent.com/COMS30106/prolog_scripts/7167c1fc5c259425d375c1ad1cfebef64d13cba1/"
